@@ -1,108 +1,38 @@
 {{ define "block"}}
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-      <span class="lead"> <i class="fa fa-comment-o"></i> {{ .Post.Title }}</span>
-      <div class="pull-right">
-        Posted by {{ .Post.AuthName }} - {{ .Post.Date }}
-      </div>
-  </div>
-  <div class="panel-body">
-      <div class="form-group">
-          Categories:
-          {{range .Post.Cats}}
-          <a href="/cats/{{.Name}}"><span class="label label-default">{{.Name}}</span></a>
-          {{end}}
-      </div>
-  
-      <div class="form-group">
-          <pre>{{.Post.FullText}}</pre>
-      </div>
-      
-      {{ if .Post.IsImage }}
-      <div class="form-group">
-          <img src="{{ .Post.Image }}" class="img-responsive" alt="image"> 
-      </div>
-      {{ end }}
-</div> 
+<section class="post-page">
 
+  <article class="card">
 
-{{ if eq .User.Role 1}}
-   
-        {{ if eq .Post.Report ""}}
-        <div class="panel-body">
-    {{ else }}
-    <div class="panel-heading">
-        {{ .Post.AcceptedName}} reported
+    <h1>{{ .Post.Title }}</h1>
+    <div class="meta">{{ .Post.AuthName }} - {{ .Post.Date }}</div>
+
+    <div class="content">
+      <pre>{{.Post.FullText}}</pre>
     </div>
-    <div class="panel-body">
-    <div class="form-group">
-        <pre>{{ .Post.Report }}</pre>
-    </div>
+
+    {{ if .Post.IsImage }}
+      <img src="{{ .Post.Image }}" class="image">
     {{ end }}
-    <div class="form-group">
-        <div class="row">
-            <div class="col-md-6">
-                <form role="form" action="/saverequest" method="POST">
-                    <input type="hidden" name="PostId" value="{{.Post.ID}}">
-                <button class="btn btn-lg btn-success pull-left active" type="submit" >YES</button>
-            </form>
-        </div>
-            <div class="col-md-6">
-            <form role="form" action="/deleterequest" method="POST">
-                <input type="hidden" name="PostId" value="{{.Post.ID}}">
-                <button class="btn btn-lg btn-danger pull-right active" type="submit">NO</button>
-            </form>
-            </div>
-        </div>
-    </div>
-    <br>
-        <div class="form-group">
-            <a href="/request"><button class="btn btn-primary pull-left active">Cancel</button></a>
-        </div>
-        </div>  
-        </div>
 
+  </article>
 
+  {{ if eq .User.Role 1 }}
+  <div class="card">
 
-{{ else if eq .User.Role 2}}
-<div class="panel-body">
-
-
-<div class="form_gorup">
-    <div class="row">
-        <div class="col-md-6">
-            <form role="form" action="/saverequest" method="POST">
-                <input type="hidden" name="PostId" value="{{.Post.ID}}">
-            <button class="btn btn-lg btn-success pull-left active" type="submit" >YES</button>
-            </form>
-        </div>
-        <div class="col-md-6">
-            <form role="form" action="/deleterequest" method="POST">
-                <input type="hidden" name="PostId" value="{{.Post.ID}}">
-            <button class="btn btn-lg btn-danger pull-right active" type="submit">NO</button>
-        </form>
-        </div>
-    </div>
-    <br>
-<div class="form-group">
-    <form role="form" action="/report" method="POST">
-     <textarea class="form-control" style="max-width: 100%; min-width: 100%; max-height: 300px;" name="report" rows="3" required></textarea>
-     <br/>
-     <button class="btn btn-primary pull-right active" type="submit">Report to admin</button>
-     <input type="hidden" name="PostId" value={{.Post.ID}}>
+    <form action="/saverequest" method="POST">
+      <input type="hidden" name="PostId" value="{{.Post.ID}}">
+      <button class="btn neon">Approve</button>
     </form>
-    <a href="/request"><button class="btn btn-primary pull-left active">Cancel</button></a>
-</div>
-</div>
 
+    <form action="/deleterequest" method="POST">
+      <input type="hidden" name="PostId" value="{{.Post.ID}}">
+      <button class="btn danger">Reject</button>
+    </form>
 
+  </div>
+  {{ end }}
 
-</div>
-</div>
-
-{{ end }}
-
-
+</section>
 
 {{ end}}

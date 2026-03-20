@@ -1,35 +1,19 @@
 {{ define "alert" }}
-{{if .Error}}
-<div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
-    <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-    <strong>Error!</strong> {{.Error}}
-</div>
-{{end}}
-{{if .Warn}}
-<div class="alert alert-warning alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
-    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-    <strong>Warning!</strong> {{.Warn}}
-</div>
-{{end}}
-{{if .Info}}
-<div class="alert alert-info alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
-    <span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-    <strong>Info!</strong> {{.Info}}
-</div>
-{{end}}
-{{if .Success}}
-<div class="alert alert-success alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-            aria-hidden="true">&times;</span></button>
-    <span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>
-    <strong>Success!</strong> {{.Success}}
-</div>
-{{end}}
+
+{{ if .Error }}
+  <div class="alert error">⚠ {{ .Error }}</div>
+{{ end }}
+
+{{ if .Warn }}
+  <div class="alert warn">⚡ {{ .Warn }}</div>
+{{ end }}
+
+{{ if .Info }}
+  <div class="alert info">ℹ {{ .Info }}</div>
+{{ end }}
+
+{{ if .Success }}
+  <div class="alert success">✔ {{ .Success }}</div>
+{{ end }}
 
 {{ end }}

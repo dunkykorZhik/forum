@@ -1,51 +1,50 @@
 {{ define "block" }}
 {{ $Page := .}}
-<form class="panel panel-default" role="form" action="/categories/posts" method="GET">
-  <div class="panel-body">
-    <div class="input-form">
-      <label for="content">Select Categories</label>
-      <div class="textblock__input" id="b_TagEditor">
-        <input type="text" placeholder="Max: 32 symbols" value="">
-      </div>
-      <textarea type="text" name="categories" class="s-disabled border-none" id="tb_TagEditor" hidden></textarea>
-    </div>
+
+<section class="form-page">
+
+  <h1>⚡ Categories</h1>
+
+  <form action="/categories/posts" method="GET" class="form">
+
+    <div id="b_TagEditor" class="tag-editor"></div>
+    <textarea name="categories" id="tb_TagEditor" hidden></textarea>
+
+    <button class="btn neon">Search</button>
+
+  </form>
+
+</section>
+
+<section class="feed">
+
+  {{ range $Category := $Page.Categories }}
+
+  <div class="card center">
+
+    <a href="/categories/posts?categories={{ $Category.Name }}" class="tag big">
+      #{{ $Category.Name }}
+    </a>
+
+    <span class="meta">
+      {{ $Category.CreatedAt.Format "2006-01-02 15:04" }}
+    </span>
+
   </div>
-  <div class="panel-footer">
-    <button class="btn btn-primary active" type="submit">find posts by selected</button>
-  </div>
-</form>
 
+  {{ end }}
 
-{{ range $Category := $Page.Categories }}
-<div class="panel panel-default">
-  <div class="panel-body text-center">
-    <div class=" btn-group-justified" role="group" aria-label="...">
-      <div class="btn-group btn-group-justified">
-        <a class="btn btn-tag btn-primary" href="/categories/posts?categories={{ $Category.Name }}">{{ $Category.Name }} </a>
-        <span class="btn btn-tag btn-primary"></span>
-      </div>
-      <div class="btn-group" role="group">
-        {{ $Category.CreatedAt.Format "2006-01-02 15:04" }}
-      </div>
-      <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default">Right</button>
-      </div>
-    </div>
-  </div>
-</div>
-{{ end }}
-
-
+</section>
 
 <script src="/static/js/tag-editor.js"></script>
 <script>
-  const tagEditor = new TagEditor({
-    BlockSelectorName: "#b_TagEditor",
-    TextBlockSelectorName: "#tb_TagEditor",
-    Tags: [],
-    MaxTags: 5,
-    MaxTagLength: 32,
-  });
+new TagEditor({
+  BlockSelectorName: "#b_TagEditor",
+  TextBlockSelectorName: "#tb_TagEditor",
+  Tags: [],
+  MaxTags: 5,
+  MaxTagLength: 32,
+});
 </script>
 
 {{ end }}

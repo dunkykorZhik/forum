@@ -1,69 +1,39 @@
 {{define "block"}}
+
+<section class="feed">
+
 {{range .Posts}}
-{{if and (eq .AuthID $.User.ID) (eq .Sel.IsLike false) (eq .Sel.IsDislike false)}}
-<div class="panel panel-default">
-    <div class="panel-heading" style="box-sizing: border-box;">
-        <span class="lead">You created this post <a href="/title/{{.ID}}" style="overflow-x:scroll"><i
-                    class="fa fa-comment-o"></i> {{ .Title }}</a></span>
-    </div>
-</div>
-{{else if and (eq .AuthID $.User.ID) (eq .Sel.IsLike true) (eq .Sel.IsDislike false)}}
-<div class="panel panel-default">
-    <div class="panel-heading" style="box-sizing: border-box;">
-        <span class="lead">You created and liked this post <a href="/title/{{.ID}}" style="overflow-x:scroll"><i
-                    class="fa fa-comment-o"></i> {{ .Title }}</a></span>
-    </div>
-</div>
-{{else if and (eq .AuthID $.User.ID) (eq .Sel.IsLike false) (eq .Sel.IsDislike true)}}
-<div class="panel panel-default">
-    <div class="panel-heading" style="box-sizing: border-box;">
-        <span class="lead">You created and disliked this post <a href="/title/{{.ID}}" style="overflow-x:scroll"><i
-                    class="fa fa-comment-o"></i> {{ .Title }}</a></span>
-    </div>
-</div>
-{{else }}
-{{if and (eq .Sel.IsLike true) (eq .Sel.IsDislike false)}}
-<div class="panel panel-default">
-    <div class="panel-heading" style="box-sizing: border-box;">
-        <span class="lead">You liked this post <a href="/title/{{.ID}}" style="overflow-x:scroll"><i
-                    class="fa fa-comment-o"></i> {{ .Title }}</a></span>
-    </div>
-</div>
-{{else if and (eq .Sel.IsLike false) (eq .Sel.IsDislike true)}}
-<div class="panel panel-default">
-    <div class="panel-heading" style="box-sizing: border-box;">
-        <span class="lead">You disliked this post <a href="/title/{{.ID}}" style="overflow-x:scroll"><i
-                    class="fa fa-comment-o"></i> {{ .Title }}</a></span>
-    </div>
-</div>
+
+  <div class="card">
+
+    {{if and (eq .AuthID $.User.ID) (eq .Sel.IsLike false) (eq .Sel.IsDislike false)}}
+      <span>You created: <a href="/title/{{.ID}}" class="link">{{ .Title }}</a></span>
+
+    {{else if and (eq .AuthID $.User.ID) (eq .Sel.IsLike true)}}
+      <span>You created & liked: <a href="/title/{{.ID}}" class="link">{{ .Title }}</a></span>
+
+    {{else if and (eq .AuthID $.User.ID) (eq .Sel.IsDislike true)}}
+      <span>You created & disliked: <a href="/title/{{.ID}}" class="link">{{ .Title }}</a></span>
+
+    {{else if eq .Sel.IsLike true}}
+      <span>You liked: <a href="/title/{{.ID}}" class="link">{{ .Title }}</a></span>
+
+    {{else if eq .Sel.IsDislike true}}
+      <span>You disliked: <a href="/title/{{.ID}}" class="link">{{ .Title }}</a></span>
+    {{end}}
+
+  </div>
+
 {{end}}
-{{end}}
-{{end}}
+
 {{range .Comments}}
-{{if eq .AuthID $.User.ID}}
-<div class="panel panel-default">
-    <div class="panel-heading" style="box-sizing: border-box;">
-        <span class="lead">You commented this post <a href="/title/{{.PostID}}" style="overflow-x:scroll"><i
-                    class="fa fa-comment-o"></i> {{ .PostName }}</a></span>
-    </div>
-</div>
+
+  {{if eq .AuthID $.User.ID}}
+  <div class="card">
+    You commented on <a href="/title/{{.PostID}}" class="link">{{ .PostName }}</a>
+  </div>
+  {{end}}
+
 {{end}}
-{{end}}
-{{range .Comments}}
-{{if and (eq .Sel.IsLike true) (eq .Sel.IsDislike false)}}
-<div class="panel panel-default">
-    <div class="panel-heading" style="box-sizing: border-box;">
-        <span class="lead">You liked a comment on this post <a href="/title/{{.PostID}}" style="overflow-x:scroll"><i
-                    class="fa fa-comment-o"></i> {{ .PostName }}</a></span>
-    </div>
-</div>
-{{else if and (eq .Sel.IsLike false) (eq .Sel.IsDislike true)}}
-<div class="panel panel-default">
-    <div class="panel-heading" style="box-sizing: border-box;">
-        <span class="lead">You disliked a comment on this post <a href="/title/{{.PostID}}" style="overflow-x:scroll"><i
-                    class="fa fa-comment-o"></i> {{ .PostName }}</a></span>
-    </div>
-</div>
-{{end}}
-{{end}}
+
 {{end}}

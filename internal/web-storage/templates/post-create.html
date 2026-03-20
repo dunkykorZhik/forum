@@ -1,39 +1,34 @@
 {{ define "block" }}
-<div class="panel panel-primary">
-  <div class="panel-heading">Start a new post with the following title</div>
-  <form class="panel-body" role="form" action="/post/create" method="POST">
-    <div class="input-form">
-      <label for="title"><b>Title</b></label>
-      <input class="form-control" type="text" name="title" placeholder="Be specific" required>
+<section class="form-page">
+
+  <h1>Create Post</h1>
+
+  <form action="/post/create" method="POST" class="form">
+
+    <input type="text" name="title" placeholder="Title..." required class="input">
+
+    <textarea name="content" placeholder="Write your post..." required class="textarea"></textarea>
+
+    <div>
+      <label>Categories</label>
+      <div id="b_TagEditor" class="tag-editor"></div>
+      <textarea name="categories" id="tb_TagEditor" hidden></textarea>
     </div>
-    <br />
-    <div class="input-form">
-      <label for="content">Body</label>
-      <textarea type="fulltext" class="form-control"
-        style="max-width: 100%; min-width: 100%; min-height: 100px; max-height: 600px;" id="bodytext" rows="5" cols="40"
-        name="content" placeholder="Include all the information you want to post" required></textarea>
-    </div>
-    <br />
-    <div class="input-form">
-      <label for="content">Categories (Max 5 category)</label>
-      <div class="textblock__input" id="b_TagEditor">
-        <input type="text" placeholder="Max: 32 symbols" value="">
-      </div>
-      <textarea type="text" name="categories" class="s-disabled border-none" id="tb_TagEditor" hidden></textarea>
-    </div>
-    <br />
-    <button class="btn btn-primary pull-right active" type="submit">Create this post</button>
+
+    <button type="submit" class="btn neon">Create</button>
+
   </form>
 
-  <script src="/static/js/tag-editor.js"></script>
-  <script>
-    const tagEditor = new TagEditor({
-      BlockSelectorName: "#b_TagEditor",
-      TextBlockSelectorName: "#tb_TagEditor",
-      Tags: [],
-      MaxTags: 5,
-      MaxTagLength: 32,
-    });
-  </script>
-</div>
+</section>
+
+<script src="/static/js/tag-editor.js"></script>
+<script>
+  const tagEditor = new TagEditor({
+    BlockSelectorName: "#b_TagEditor",
+    TextBlockSelectorName: "#tb_TagEditor",
+    Tags: [],
+    MaxTags: 5,
+    MaxTagLength: 32,
+  });
+</script>
 {{ end }}

@@ -1,0 +1,63 @@
+{{ define "block" }}
+{{ $Post := .Post }}
+<div class="panel panel-primary">
+  <div class="panel-heading"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit your post</div>
+  <form class="panel-body" role="form" action="/post/edit" method="POST">
+    <input type="number" name="id" value="{{ $Post.Id }}" hidden></input>
+    <div class="input-form">
+      <label for="title"><b>Title</b></label>
+      <input class="form-control" type="text" name="title" placeholder="Be specific" value="{{ $Post.Title }}" required>
+    </div>
+    <br />
+    <div class="input-form">
+      <label for="content">Body</label>
+      <textarea type="fulltext" class="form-control"
+        style="max-width: 100%; min-width: 100%; min-height: 100px; max-height: 600px;" id="bodytext" rows="5" cols="40"
+        name="content" placeholder="Include all the information you want to post" required>{{ $Post.Content }}</textarea>
+    </div>
+    <br />
+    <div class="input-form">
+      <label for="content">Categories (Max 5 category)</label>
+      <div class="textblock__input" id="b_TagEditor">
+        <input type="text" placeholder="Max: 32 symbols" value="">
+      </div>
+      <textarea type="text" name="categories" class="s-disabled border-none" id="tb_TagEditor" hidden></textarea>
+    </div>
+    <br />
+    <!-- <div class="input-form">
+      <label for="image">Image</label>
+      <p>You can upload image in JPEG/PNG/GIF format.</p>
+      <input type="file" name="image">
+      <span>(Max 20 MB)</span>
+    </div> -->
+    <!-- <label for="categories">Categories</label>
+    <div>Add up to 5 categories to describe what your post is about</div>
+    <div class="input-group control-group after-add-more">
+      <input type="text" name="addmore[]" class="form-control cat" placeholder="e.g. (golang)" required>
+      <div class="input-group-btn">
+        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+      </div>
+    </div>
+    <br /> -->
+    <button class="btn btn-primary pull-right active" type="submit">Update post</button>
+  </form>
+
+  <script src="/static/js/tag-editor.js"></script>
+  <script>
+  const tags = [
+    {{- range $i, $category := $Post.Categories }}
+      {{- if $i }}, {{ end }}
+      {{ printf "%q" $category.Name }}
+    {{- end }}
+  ];
+
+  const tagEditor = new TagEditor({
+    BlockSelectorName: "#b_TagEditor",
+    TextBlockSelectorName: "#tb_TagEditor",
+    Tags: tags,
+    MaxTags: 5,
+    MaxTagLength: 32,
+  });
+</script>
+</div>
+{{ end }}

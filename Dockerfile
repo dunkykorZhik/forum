@@ -30,6 +30,7 @@ COPY --from=builder /app/server .
 
 # Copy static + templates
 COPY --from=builder /app/internal/web-storage ./internal/web-storage
+COPY --from=builder /app/internal/db ./internal/db
 
 # (optional) create db folder
 RUN mkdir -p /app/data

@@ -7,5 +7,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - ./data:/app/data
-    restart: unless-stopped
+      - db-data:/app  # persist the app directory (or just the DB)
+
+volumes:
+  db-data:
